@@ -212,8 +212,8 @@ public class TouchHandler {
 	    			//eventOrder.remove(event);
 	    		}
 
-//	    		if(!isValid)
-//	    			eventOrder.invalidate();
+	    		if(!isValid)
+	    			eventOrder.invalidate();
     		}
 
 //    		for(int i = 0; i < event.getPointerCount(); i++)

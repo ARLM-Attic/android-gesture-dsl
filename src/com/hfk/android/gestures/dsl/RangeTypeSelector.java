@@ -1,16 +1,25 @@
 package com.hfk.android.gestures.dsl;
 
-public class RangeTypeSelector {
+import android.view.View;
 
-	public DistanceRangeStartSelector milliMeters(int value)
+public class RangeTypeSelector {
+	
+	public RangeTypeSelector(View parentView)
 	{
-		DistanceRangeStartSelector result = new DistanceRangeStartSelector();
+		view = parentView;
+	}
+
+	public DistanceRangeStartSelector milliMeters(int range)
+	{
+		DistanceRangeStartSelector result = new DistanceRangeStartSelector(range, view);
 		return result;
 	}
 	
-	public TimeRangeStartSelector seconds(int value)
+	public TimeRangeStartSelector seconds(int range)
 	{
-		TimeRangeStartSelector result = new TimeRangeStartSelector();
+		TimeRangeStartSelector result = new TimeRangeStartSelector(range, view);
 		return result;
 	}
+	
+	private View view;
 }

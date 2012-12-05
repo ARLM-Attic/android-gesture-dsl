@@ -46,33 +46,33 @@ public class NextGestureAfterTouchDown {
 			upEvent.conditionList.add(condition);
 		    gesture.addEvent(upEvent);
 			
-			//	we insert a TOUCH_MOVE which always invalidates.
-		    TouchEvent moveEvent = new TouchEvent();
-		    moveEvent.event = TouchEvent.TOUCH_MOVE;
-		    gesture.addEvent(moveEvent);
+//			//	we insert a TOUCH_MOVE which always invalidates.
+//		    TouchEvent moveEvent = new TouchEvent();
+//		    moveEvent.event = TouchEvent.TOUCH_MOVE;
+//		    gesture.addEvent(moveEvent);
 		}
-		else
-		{		
-			TouchEvent previousEvent = gesture.getEvent(size - 1);
-			// If no TOUCH_MOVE exists, then insert one which, when executed, invalidates the gesture
-			if(previousEvent.event != TouchEvent.TOUCH_MOVE)
-			{
-			    TouchEvent moveEvent = new TouchEvent();
-			    moveEvent.event = TouchEvent.TOUCH_MOVE;
-				IfThenClause condition = new IfThenClause(
-						new IGestureCondition()
-						{
-							public boolean checkCondition(GestureEvent motion, TouchGesture gesture)
-							{
-								return true;
-							}
-						}
-				);
-				condition.setThenAction(new DoInvalidateGestureGestureAction());
-				moveEvent.conditionList.add(condition);
-			    gesture.addEvent(moveEvent);
-			}
-		}
+//		else
+//		{		
+//			TouchEvent previousEvent = gesture.getEvent(size - 1);
+//			// If no TOUCH_MOVE exists, then insert one which, when executed, invalidates the gesture
+//			if(previousEvent.event != TouchEvent.TOUCH_MOVE)
+//			{
+//			    TouchEvent moveEvent = new TouchEvent();
+//			    moveEvent.event = TouchEvent.TOUCH_MOVE;
+//				IfThenClause condition = new IfThenClause(
+//						new IGestureCondition()
+//						{
+//							public boolean checkCondition(GestureEvent motion, TouchGesture gesture)
+//							{
+//								return true;
+//							}
+//						}
+//				);
+//				condition.setThenAction(new DoInvalidateGestureGestureAction());
+//				moveEvent.conditionList.add(condition);
+//			    gesture.addEvent(moveEvent);
+//			}
+//		}
 		
 	    TouchEvent upEvent = new TouchEvent();
 	    upEvent.event = TouchEvent.TOUCH_UP;

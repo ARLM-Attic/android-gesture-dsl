@@ -4,10 +4,12 @@ import android.view.View;
 
 import com.hfk.android.ScreenVector;
 
-public class CheckWithinMilliSecondsOfTimingId extends GestureConditionBase<View> {
+public class CheckWithinMilliSecondsOfTimingIdCondition extends GestureConditionBase<View> {
 
-	public CheckWithinMilliSecondsOfTimingId(View view, String key) {
+	public CheckWithinMilliSecondsOfTimingIdCondition(View view, int rangeValue, String key) {
 		super(view);
+		
+		range = rangeValue;
 		dataKey = key;
 	}
 	
@@ -16,11 +18,12 @@ public class CheckWithinMilliSecondsOfTimingId extends GestureConditionBase<View
 		Long actionOnTime = (Long)gesture.getContext(dataKey);
 		if(actionOnTime != null)
 		{
-			return (long)(motion.getTime() - actionOnTime.longValue()) < 500;
+			return (long)(motion.getTime() - actionOnTime.longValue()) <= range;
 		}
 
 		return true;
 	}
 
+	private int range;
 	private String dataKey;
 }

@@ -19,11 +19,11 @@ public class ClickOnRectangleGesture extends GestureBuilder<AndroidGestureDSLVie
 		TouchGesture gesture = new TouchGesture("ClickOnCircleGesture");
 		
 		this.Create(gesture).TouchDown().If(OnRectangle())
-//			.AndNext().Move()
-//				.If(within().milliMeters(5).fromTouchDown())
+			.AndNext().Move()
+				.If(within().milliMeters(5).fromTouchDown())
 			.AndNext().TouchUp()
-				//.If(within().seconds(1).fromTouchDown())
-				.Do1(ShowMessage("You clicked on the circle"));
+				.If(within().seconds(1).fromTouchDown())
+					.Do2(ShowMessage("You clicked on the circle"));
 		
 		return gesture;
 	}

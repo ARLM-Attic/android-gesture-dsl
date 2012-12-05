@@ -4,10 +4,12 @@ import android.view.View;
 
 import com.hfk.android.ScreenVector;
 
-public class CheckDistanceFromRegisteredPointExceedsCondition extends GestureConditionBase<View> {
+public class CheckWithinDistanceOfRegisteredPointCondition extends GestureConditionBase<View> {
 
-	public CheckDistanceFromRegisteredPointExceedsCondition(View view, String key) {
+	public CheckWithinDistanceOfRegisteredPointCondition(View view, int rangeValue, String key) {
 		super(view);
+		
+		range = rangeValue;
 		dataKey = key;
 	}
 	
@@ -16,11 +18,12 @@ public class CheckDistanceFromRegisteredPointExceedsCondition extends GestureCon
 		ScreenVector actionDown = (ScreenVector)gesture.getContext(dataKey);
 		if(actionDown != null)
 		{
-			return (int)(actionDown.distance(motion.getPosition())) > 10;
+			return (int)(actionDown.distance(motion.getPosition())) <= range;
 		}
 
 		return true;
 	}
 
+	private int range;
 	private String dataKey;
 }
