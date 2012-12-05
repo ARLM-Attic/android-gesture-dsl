@@ -3,7 +3,6 @@ package com.hfk.android.gestures.dsl;
 import android.view.View;
 
 import com.hfk.android.gestures.CheckWithinDistanceOfRegisteredPointCondition;
-import com.hfk.android.gestures.CheckWithinDistanceOfTouchEventCondition;
 import com.hfk.android.gestures.IGestureCondition;
 
 public class DistanceRangeStartSelector {
