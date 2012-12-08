@@ -10,16 +10,16 @@ public class NextGestureAfterTouchUp {
 		gesture = gstr;
 	}
 	
-	public ActionAfterGestureOrConditional<NextGestureAfterMove> Move()
-	{
-	    TouchEvent moveEvent = new TouchEvent();
-	    moveEvent.event = TouchEvent.TOUCH_MOVE;
-	    
-	    gesture.addEvent(moveEvent);
-		
-		ActionAfterGestureOrConditional<NextGestureAfterMove> move = new ActionAfterGestureOrConditional<NextGestureAfterMove>(NextGestureAfterMove.class, gesture, moveEvent);
-		return move;
-	}
+//	public ActionAfterGestureOrConditional<NextGestureAfterMove> Move()
+//	{
+//	    TouchEvent moveEvent = new TouchEvent();
+//	    moveEvent.event = TouchEvent.TOUCH_MOVE;
+//	    
+//	    gesture.addEvent(moveEvent);
+//		
+//		ActionAfterGestureOrConditional<NextGestureAfterMove> move = new ActionAfterGestureOrConditional<NextGestureAfterMove>(NextGestureAfterMove.class, gesture, moveEvent);
+//		return move;
+//	}
 	
 	public ActionAfterGestureOrConditional<NextGestureAfterTouchDown> TouchDown()
 	{

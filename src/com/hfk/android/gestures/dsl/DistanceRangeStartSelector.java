@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.hfk.android.gestures.CheckWithinDistanceOfRegisteredPointCondition;
 import com.hfk.android.gestures.IGestureCondition;
+import com.hfk.android.gestures.TouchHandler;
 
 public class DistanceRangeStartSelector {
 	public DistanceRangeStartSelector(int distanceRange, View parentView)
@@ -14,17 +15,17 @@ public class DistanceRangeStartSelector {
 	
 	public IGestureCondition fromTouchDown()
 	{
-		return new CheckWithinDistanceOfRegisteredPointCondition(view, range, "ACTION_DOWN");
+		return new CheckWithinDistanceOfRegisteredPointCondition(view, range, TouchHandler.ActionDownPos);
 	}
 	
 	public IGestureCondition fromMove()
 	{
-		return  new CheckWithinDistanceOfRegisteredPointCondition(view, range, "ACTION_MOVE");
+		return  new CheckWithinDistanceOfRegisteredPointCondition(view, range, TouchHandler.ActionMovePos);
 	}
 	
 	public IGestureCondition fromTouchUp()
 	{
-		return  new CheckWithinDistanceOfRegisteredPointCondition(view, range, "ACTION_UP");
+		return  new CheckWithinDistanceOfRegisteredPointCondition(view, range, TouchHandler.ActionUpPos);
 	}
 	
 	private int range;

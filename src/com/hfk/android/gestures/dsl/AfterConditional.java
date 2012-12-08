@@ -2,8 +2,10 @@ package com.hfk.android.gestures.dsl;
 
 import java.lang.reflect.InvocationTargetException;
 
+import com.hfk.android.gestures.DoMultipleAction;
 import com.hfk.android.gestures.IGestureAction;
 import com.hfk.android.gestures.IGestureCondition;
+import com.hfk.android.gestures.IfThenClause;
 import com.hfk.android.gestures.TouchEvent;
 import com.hfk.android.gestures.TouchGesture;
 
@@ -40,11 +42,22 @@ public class AfterConditional<NextGesture> {
 	
 	public AfterConditionalContinuation<NextGesture> Do2(IGestureAction action)
 	{
-		event.conditionList.get(event.conditionList.size()-1).setThenAction(action);
+		IfThenClause ifThenClause = event.conditionList.get(event.conditionList.size()-1);
+		ifThenClause.setThenAction(action);
 		
-		AfterConditionalContinuation<NextGesture> result = new AfterConditionalContinuation<NextGesture>(refClass, gesture, event);
+		AfterConditionalContinuation<NextGesture> result = new AfterConditionalContinuation<NextGesture>(refClass, gesture, event, ifThenClause);
 		
 		return result;
+	}
+	
+	public AfterConditionalContinuation<NextGesture> Do2(IGestureAction action1, IGestureAction action2)
+	{
+		return Do2(new DoMultipleAction(action1, action2));
+	}
+	
+	public AfterConditionalContinuation<NextGesture> Do2(IGestureAction action1, IGestureAction action2, IGestureAction action3)
+	{
+		return Do2(new DoMultipleAction(action1, action2, action3));
 	}
 	
 	public AfterConditional<NextGesture> AndIf(IGestureCondition condition)

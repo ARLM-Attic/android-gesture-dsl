@@ -2,21 +2,15 @@ package com.hfk.android.gestures;
 
 public class DoInvalidateRunningTimerAction implements IGestureAction {
 
-	public DoInvalidateRunningTimerAction(TouchHandler handler) {
-		//touchHandler = handler;
-		//touchGesture = gesture;
+	public DoInvalidateRunningTimerAction() {
 	}
 
 	@Override
 	public void executeAction(GestureEvent motion, TouchGesture gesture) {
-		if(gesture.contextExists("TIMER_INSTALLED"))
+		if(gesture.contextExists(TouchHandler.TouchHandler))
 		{
-			TouchHandler handler = (TouchHandler)gesture.getContext("TIMER_INSTALLED");
+			TouchHandler handler = (TouchHandler)gesture.getContext(TouchHandler.TouchHandler);
 			handler.invalidateTimer();
-			gesture.removeContext("TIMER_INSTALLED");
 		}
 	}
-	
-	//private TouchHandler touchHandler;
-	//private TouchGesture touchGesture;
 }

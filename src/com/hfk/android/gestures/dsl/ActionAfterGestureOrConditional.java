@@ -1,6 +1,7 @@
 package com.hfk.android.gestures.dsl;
 
 import com.hfk.android.gestures.DoInvalidateGestureGestureAction;
+import com.hfk.android.gestures.DoMultipleAction;
 import com.hfk.android.gestures.GestureEvent;
 import com.hfk.android.gestures.IGestureAction;
 import com.hfk.android.gestures.IGestureCondition;
@@ -35,6 +36,16 @@ public class ActionAfterGestureOrConditional<NextGesture>  {
 		NextGestureOrConditional<NextGesture> result = new NextGestureOrConditional<NextGesture>(refClass, gesture, event);
 		
 		return result;
+	}
+	
+	public NextGestureOrConditional<NextGesture> Do1(IGestureAction action1, IGestureAction action2)
+	{
+		return Do1(new DoMultipleAction(action1, action2));
+	}
+	
+	public NextGestureOrConditional<NextGesture> Do1(IGestureAction action1, IGestureAction action2, IGestureAction action3)
+	{
+		return Do1(new DoMultipleAction(action1, action2, action3));
 	}
 	
 	public AfterConditional<NextGesture> If(IGestureCondition condition) 

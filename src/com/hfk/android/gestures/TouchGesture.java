@@ -70,11 +70,6 @@ public class TouchGesture implements IResetable  {
 		return ((index < eventList.size()) && isValid);
 	}
 	
-//	public int size()
-//	{
-//		return eventList.size();
-//	}
-	
 	public TouchEvent current()
 	{
 		return eventList.get(index).touchEvent;
@@ -100,11 +95,7 @@ public class TouchGesture implements IResetable  {
 		if(!isValid)
 			return false;
 		
-		return ((index >= eventList.size())
-//				|| (index == (eventList.size() - 1)
-//						&& eventList.get(index).touchEvent.event == TouchEvent.TOUCH_MOVE
-//						&& eventList.get(index).isExecuted)
-						);
+		return (index >= eventList.size());
 	}
 	
 	public boolean contextExists(String key)

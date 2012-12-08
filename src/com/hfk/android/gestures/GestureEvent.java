@@ -21,16 +21,6 @@ public class GestureEvent {
 		return androidEvent.getEventTime();
 	}
 	
-//	public float getX()
-//	{
-//		return androidEvent.getX();
-//	}
-//	
-//	public float getY()
-//	{
-//		return androidEvent.getY();
-//	}
-	
 	ScreenVector position;
 	MotionEvent androidEvent;
 }

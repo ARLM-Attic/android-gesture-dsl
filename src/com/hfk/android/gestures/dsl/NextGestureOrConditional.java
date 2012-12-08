@@ -1,5 +1,7 @@
 package com.hfk.android.gestures.dsl;
 
+import java.lang.reflect.InvocationTargetException;
+
 import com.hfk.android.gestures.TouchEvent;
 import com.hfk.android.gestures.TouchGesture;
 
@@ -12,12 +14,28 @@ public class NextGestureOrConditional<NextGesture> {
 		event = vnt;
 	}
 	
-	public NextGesture AndNext() 
+	public NextGesture AndNext()
 	{
-		NextGesture result = getInstance(refClass);
+		NextGesture result = null;
+		try {
+			result = getInstance(refClass);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return result;
 	}
+
 	
 	public AfterConditional<NextGesture> AndIf() 
 	{
@@ -27,10 +45,11 @@ public class NextGestureOrConditional<NextGesture> {
 	}
 	
 	//http://stackoverflow.com/questions/2434041/instantiating-generics-type-in-java
-	private NextGesture getInstance(Class<NextGesture> aClass)
+	//http://stackoverflow.com/questions/234600/can-i-use-class-newinstance-with-constructor-arguments
+	private NextGesture getInstance(Class<NextGesture> aClass) throws IllegalArgumentException, SecurityException, InvocationTargetException, NoSuchMethodException
 	{
 		try {
-			return aClass.newInstance();
+			return aClass.getDeclaredConstructor(TouchGesture.class).newInstance(gesture);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,6 +59,7 @@ public class NextGestureOrConditional<NextGesture> {
 		}
 		return null;
 	}
+
 	
 	private Class<NextGesture> refClass;
 	private TouchGesture gesture;

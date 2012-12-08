@@ -11,6 +11,17 @@ import android.view.MotionEvent;
 
 public class TouchHandler {
 	
+	public static String TouchHandler = "TOUCH_HANDLER";
+	
+	public static String ActionDownPos = "ACTION_DOWN_POSITION";
+	public static String ActionDownTime = "ACTION_DOWN_TIME";
+	
+	public static String ActionMovePos = "ACTION_MOVE_POSITION";
+	public static String ActionMoveTime = "ACTION_MOVE_TIME";
+	
+	public static String ActionUpPos = "ACTION_UP_POSITION";
+	public static String ActionUpTime = "ACTION_UP_TIME";
+	
 	public TouchHandler()
 	{
 		handler = new Handler();
@@ -18,6 +29,7 @@ public class TouchHandler {
 	
 	public void addGesture(TouchGesture gesture)
 	{
+		gesture.addContext(TouchHandler, this);
 		gestureList.add(gesture);
 	}
 	
@@ -29,24 +41,12 @@ public class TouchHandler {
 		}
 	}
 	
-	public void installTimer(IGestureCondition condition, IGestureAction action, int timeOut, final TouchGesture gesture) {
-		timerGestureCondition = condition;
+	public void installTimer(IGestureAction action, int timeOut, final TouchGesture gesture) {
 		timerGestureAction = action;
 		timerAction = new Runnable()
 		{
 			public void run() {
-				boolean doAction = true;
-				if(timerGestureCondition != null)
-				{
-					if(!timerGestureCondition.checkCondition(lastMotionEvent, gesture))
-					{
-						doAction = false;
-					}
-				}
-				if(doAction)
-				{
-					timerGestureAction.executeAction(lastMotionEvent, gesture);
-				}
+				timerGestureAction.executeAction(lastMotionEvent, gesture);
 			}
 		};
 		handler.postDelayed(timerAction, timeOut);
@@ -59,37 +59,15 @@ public class TouchHandler {
     	
     	GestureEvent motion = new GestureEvent(androidMotion);
       	
-//    	int pointerIndex = motion.getActionIndex();
-//    	int pointerId = motion.getPointerId(pointerIndex);
-		
-    	//boolean result = true;
 		switch (action) {
     	case MotionEvent.ACTION_DOWN:
     	case MotionEvent.ACTION_POINTER_DOWN:
-//			if(timerAction != null)
-//			{
-//				handler.removeCallbacks(timerAction);
-//				timerAction = null;
-//			}
     		for(TouchGesture eventOrder : gestureList)
     		{
-    			eventOrder.addContext("ACTION_DOWN", motion.getPosition());
-    			//boolean isValid = false;
+    			eventOrder.addContext(ActionDownPos, motion.getPosition());
+    			eventOrder.addContext(ActionDownTime, motion.getTime());
 	    		if(eventOrder.isValid() && eventOrder.current().event == TouchEvent.TOUCH_DOWN)
 	    		{
-	    			TouchEvent event = eventOrder.current();
-//	    			if(event.condition != null)
-//	    			{
-//	    				if(event.condition.checkCondition(motion))
-//	    				{
-//	    					isValid = true;
-//	    				}
-//	    			}
-//	    			else
-//	    			{
-//	    				isValid = true;
-//	    			}
-	    			
 	    			for(IfThenClause condition: eventOrder.current().conditionList)
 	    			{
 	    				condition.Execute(motion, eventOrder);
@@ -99,113 +77,29 @@ public class TouchHandler {
 	    				}
 	    			}
 	    			
-	    			//if(isValid && event.action != null)
-//	    			if(eventOrder.isValid())
-//	    			{
-//	    				//event.action.executeAction(motion);
-//	    				if(event.timeEvent != null)
-//	    				{
-//	    					timerGestureCondition = event.timeEvent.condition;
-//	    					timerGestureAction = event.timeEvent.action;
-//	    					timerAction = new Runnable()
-//	    					{
-//	    						public void run() {
-//	    							boolean doAction = true;
-//	    							if(timerGestureCondition != null)
-//	    							{
-//		    							if(!timerGestureCondition.checkCondition(lastMotionEvent))
-//		    							{
-//		    								doAction = false;
-//		    							}
-//	    							}
-//	    							if(doAction)
-//	    							{
-//	    								timerGestureAction.executeAction(lastMotionEvent);
-//	    							}
-//	    						}
-//	    					};
-//	    					handler.postDelayed(timerAction, 
-//	    							event.timeEvent.timeOut);
-//	    				}
-//	    			}
 					eventOrder.currentIsExecuted();
 	    			eventOrder.moveNext();
 	    		}
-	    		
-//	    		if(!isValid)
-//	    			eventOrder.invalidate();
     		}
-
-//    		EventData eventData = new EventData();
-//    		eventData.x = event.getX(pointerIndex);
-//    		eventData.y = event.getY(pointerIndex);
-//    		eventDataMap.put(new Integer(pointerId), eventData);
 
     		break;
     	case MotionEvent.ACTION_MOVE:
-//			if(timerAction != null)
-//			{
-//				handler.removeCallbacks(timerAction);
-//				timerAction = null;
-//			}
     		for(TouchGesture eventOrder : gestureList)
     		{
     			boolean isValid = false;
+    			int event = eventOrder.current().event;
 	    		if(eventOrder.isValid() && eventOrder.current().event == TouchEvent.TOUCH_MOVE)
 	    		{
 	    			isValid = true;
-	    			boolean conditionisValid = false;
-	    			TouchEvent event = eventOrder.current();
-//	    			if(event.condition != null)
-//	    			{
-//	    				if(event.condition.checkCondition(motion))
-//	    				{
-//	    					conditionisValid = true;
-//	    				}
-//	    			}
-//	    			else
-//	    			{
-//	    				conditionisValid = true;
-//	    			}
-	    			
 	    			for(IfThenClause condition: eventOrder.current().conditionList)
 	    			{
-	    				conditionisValid = condition.Execute(motion, eventOrder);
+	    				condition.Execute(motion, eventOrder);
 	    				if(!eventOrder.isValid())
 	    				{
 	    					break;
 	    				}
 	    			}
-	    			
-	    			//if(conditionisValid && event.action != null)
-//	    			if(conditionisValid)
-//	    			{
-//	    				//event.action.executeAction(motion);
-//	    				if(event.timeEvent != null && lastMotionEvent != null)
-//	    				{
-//	    					timerGestureCondition = event.timeEvent.condition;
-//	    					timerGestureAction = event.timeEvent.action;
-//	    					timerAction = new Runnable()
-//	    					{
-//	    						public void run() {
-//	    							boolean doAction = true;
-//	    							if(timerGestureCondition != null)
-//	    							{
-//		    							if(!timerGestureCondition.checkCondition(lastMotionEvent))
-//		    							{
-//		    								doAction = false;
-//		    							}
-//	    							}
-//	    							if(doAction)
-//	    							{
-//	    								timerGestureAction.executeAction(lastMotionEvent);
-//	    							}
-//	    						}
-//	    					};
-//	    					handler.postDelayed(timerAction, 
-//	    							event.timeEvent.timeOut);
-//	    				}
-//	    			}
+
 					eventOrder.currentIsExecuted();
 	    			// Do not remove MOVE events because there will probably be a series
 	    			//	of these events and otherwise only one would be accepted
@@ -216,28 +110,13 @@ public class TouchHandler {
 	    			eventOrder.invalidate();
     		}
 
-//    		for(int i = 0; i < event.getPointerCount(); i++)
-//    		{
-//    			int curPointerId = event.getPointerId(i);
-//	    		if(eventDataMap.containsKey(new Integer(curPointerId)))
-//	    		{
-//	        		EventData moveEventData = eventDataMap.get(new Integer(curPointerId));
-//	        		moveEventData.x = event.getX(i);
-//	        		moveEventData.y = event.getY(i);
-//	    		}
-//			}
-
     		break;
     	case MotionEvent.ACTION_UP:
     	case MotionEvent.ACTION_POINTER_UP:
-//			if(timerAction != null)
-//			{
-//				handler.removeCallbacks(timerAction);
-//				timerAction = null;
-//			}
     		for(TouchGesture eventOrder : gestureList)
     		{
-    			//boolean isValid = false;
+    			eventOrder.addContext(ActionUpPos, motion.getPosition());
+    			eventOrder.addContext(ActionUpTime, motion.getTime());
 				if(eventOrder.isValid() && (eventOrder.current().event == TouchEvent.TOUCH_MOVE) && !eventOrder.current().isOptional && !eventOrder.isCurrentExecuted())
 				{
 					eventOrder.invalidate();
@@ -249,17 +128,6 @@ public class TouchHandler {
 	    		if(eventOrder.isValid() && eventOrder.current().event == TouchEvent.TOUCH_UP)
 	    		{
 	    			TouchEvent event = eventOrder.current();
-//	    			if(event.condition != null)
-//	    			{
-//	    				if(event.condition.checkCondition(motion))
-//	    				{
-//	    					isValid = true;
-//	    				}
-//	    			}
-//	    			else
-//	    			{
-//	    				isValid = true;
-//	    			}
 	    			
 	    			for(IfThenClause condition: eventOrder.current().conditionList)
 	    			{
@@ -270,43 +138,10 @@ public class TouchHandler {
 	    				}
 	    			}
 	    			
-	    			//if(isValid && event.action != null)
-//	    			if(eventOrder.isValid())
-//	    			{
-//	    				//event.action.executeAction(motion);
-//	    				if(event.timeEvent != null && lastMotionEvent != null)
-//	    				{
-//	    					timerGestureCondition = event.timeEvent.condition;
-//	    					timerGestureAction = event.timeEvent.action;
-//	    					timerAction = new Runnable()
-//	    					{
-//	    						public void run() {
-//	    							boolean doAction = true;
-//	    							if(timerGestureCondition != null)
-//	    							{
-//		    							if(!timerGestureCondition.checkCondition(lastMotionEvent))
-//		    							{
-//		    								doAction = false;
-//		    							}
-//	    							}
-//	    							if(doAction)
-//	    							{
-//	    								timerGestureAction.executeAction(lastMotionEvent);
-//	    							}
-//	    						}
-//	    					};
-//	    					handler.postDelayed(timerAction, event.timeEvent.timeOut);
-//	    				}
-//	    			}
 					eventOrder.currentIsExecuted();
 	    			eventOrder.moveNext();
 	    		}
-
-//	    		if(!isValid)
-//	    			eventOrder.invalidate();
     		}
-
-//    		eventDataMap.remove(new Integer(pointerId));
 
     		break;
     	}
@@ -323,6 +158,7 @@ public class TouchHandler {
 			for(TouchGesture eventOrder : gestureList)
 			{
 				eventOrder.reset();
+				eventOrder.addContext(TouchHandler, this);
 			}
 		}
 
@@ -334,13 +170,4 @@ public class TouchHandler {
 	private IGestureAction timerGestureAction = null;
 	private IGestureCondition timerGestureCondition = null;
 	private GestureEvent lastMotionEvent;
-    
-//    private Map<Integer, EventData> eventDataMap; 
-//    
-//    private class EventData{
-//    	public float x;
-//    	public float y;
-//    }
-    
-
 }

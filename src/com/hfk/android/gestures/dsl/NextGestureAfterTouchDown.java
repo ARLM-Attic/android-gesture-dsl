@@ -18,6 +18,19 @@ public class NextGestureAfterTouchDown {
 	{
 	    TouchEvent moveEvent = new TouchEvent();
 	    moveEvent.event = TouchEvent.TOUCH_MOVE;
+	    moveEvent.isOptional = false;
+	    
+	    gesture.addEvent(moveEvent);
+		
+		ActionAfterGestureOrConditional<NextGestureAfterMove> result = new ActionAfterGestureOrConditional<NextGestureAfterMove>(NextGestureAfterMove.class, gesture, moveEvent);		
+		return result;
+	}
+	
+	public ActionAfterGestureOrConditional<NextGestureAfterMove> CanMove()
+	{
+	    TouchEvent moveEvent = new TouchEvent();
+	    moveEvent.event = TouchEvent.TOUCH_MOVE;
+	    moveEvent.isOptional = true;
 	    
 	    gesture.addEvent(moveEvent);
 		

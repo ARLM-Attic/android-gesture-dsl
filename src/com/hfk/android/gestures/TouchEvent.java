@@ -9,9 +9,5 @@ public class TouchEvent {
 	
 	public int event;
 	public boolean isOptional = false;
-	//public IGestureAction action = null;
-	//public IGestureCondition condition = null;
 	public ArrayList<IfThenClause> conditionList = new ArrayList<IfThenClause>();
-	
-	//public TimeoutEvent timeEvent = null;
 }

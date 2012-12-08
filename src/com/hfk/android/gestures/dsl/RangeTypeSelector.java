@@ -17,7 +17,7 @@ public class RangeTypeSelector {
 	
 	public TimeRangeStartSelector seconds(int range)
 	{
-		TimeRangeStartSelector result = new TimeRangeStartSelector(range, view);
+		TimeRangeStartSelector result = new TimeRangeStartSelector(1000 * range, view);
 		return result;
 	}
 	

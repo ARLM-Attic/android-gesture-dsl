@@ -1,20 +1,8 @@
 package com.hfk.android.gestures;
 
-public class IfThenClause {
+import android.view.View;
 
-//	public IfThenClause(IGestureCondition condition, IGestureAction thenAction, IGestureAction elseAction)
-//	{
-//		this.condition = condition;
-//		this.onTrueAction = thenAction;
-//		this.onFalseAction = elseAction;
-//	}
-//
-//	public IfThenClause(IGestureCondition condition, IGestureAction thenAction)
-//	{
-//		this.condition = condition;
-//		this.onTrueAction = thenAction;
-//		this.onFalseAction = null;
-//	}
+public class IfThenClause {
 
 	public IfThenClause(IGestureCondition condition)
 	{
@@ -23,19 +11,6 @@ public class IfThenClause {
 		this.onFalseAction = new DoInvalidateGestureGestureAction();
 	}
 
-//	public IfThenClause(IGestureAction thenAction)
-//	{
-//		this.condition = new IGestureCondition()
-//		{
-//			public boolean checkCondition(GestureEvent motion, TouchGesture gesture)
-//			{
-//				return true;
-//			}
-//		};
-//		this.onTrueAction = thenAction;
-//		this.onFalseAction = null;
-//	}
-	
 	public void setThenAction(IGestureAction action)
 	{
 		this.onTrueAction = action;
@@ -66,6 +41,8 @@ public class IfThenClause {
 		}
 	}
 	
+	View view;
+
 	private IGestureCondition condition;
 	private IGestureAction onTrueAction;
 	private IGestureAction onFalseAction;

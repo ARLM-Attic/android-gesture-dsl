@@ -1,7 +1,5 @@
 package com.hfk.android.gestures;
 
-import com.hfk.android.ScreenVector;
-
 public class CheckNot implements IGestureCondition {
 
 	public CheckNot(IGestureCondition condition) {
