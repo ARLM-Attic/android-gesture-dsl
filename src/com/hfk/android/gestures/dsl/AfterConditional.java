@@ -40,6 +40,11 @@ public class AfterConditional<NextGesture> {
 		return result;
 	}
 	
+	public void AndFinally(IGestureAction action)
+	{
+		gesture.setResetAction(action);
+	}
+	
 	public AfterConditionalContinuation<NextGesture> Do2(IGestureAction action)
 	{
 		IfThenClause ifThenClause = event.conditionList.get(event.conditionList.size()-1);

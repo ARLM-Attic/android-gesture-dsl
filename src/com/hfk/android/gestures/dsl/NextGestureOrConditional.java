@@ -2,6 +2,7 @@ package com.hfk.android.gestures.dsl;
 
 import java.lang.reflect.InvocationTargetException;
 
+import com.hfk.android.gestures.IGestureAction;
 import com.hfk.android.gestures.TouchEvent;
 import com.hfk.android.gestures.TouchGesture;
 
@@ -35,7 +36,11 @@ public class NextGestureOrConditional<NextGesture> {
 		
 		return result;
 	}
-
+	
+	public void AndFinally(IGestureAction action)
+	{
+		gesture.setResetAction(action);
+	}
 	
 	public AfterConditional<NextGesture> AndIf() 
 	{

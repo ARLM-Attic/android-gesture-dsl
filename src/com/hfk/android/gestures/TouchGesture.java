@@ -38,20 +38,30 @@ public class TouchGesture implements IResetable  {
 	}
 	
 	public void reset()
-	{
-		isValid = true;
-		index = 0;
-		context = new Hashtable<String, Object>();
-		
+	{		
 		for(IResetable resetable:resetableList)
 		{
 			resetable.reset();
 		}
+		
+		if(onResetAction != null)
+		{
+			onResetAction.executeAction(null, this);
+		}
+		
+		isValid = true;
+		index = 0;
+		context = new Hashtable<String, Object>();
 	}
 	
 	public void addResetable(IResetable resetable)
 	{
 		resetableList.add(resetable);
+	}
+	
+	public void setResetAction(IGestureAction action)
+	{
+		onResetAction = action;
 	}
 	
 	public void invalidate()
@@ -121,6 +131,7 @@ public class TouchGesture implements IResetable  {
 	private String id;
 	private List<TouchEventExecution> eventList = new ArrayList<TouchEventExecution>();	
 	private List<IResetable> resetableList = new ArrayList<IResetable>();	
+	private IGestureAction onResetAction = null;
 	private boolean isValid = true;
 	private int index = 0;
 	
