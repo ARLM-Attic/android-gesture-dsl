@@ -14,9 +14,14 @@ public class TimeRangeStartSelector {
 		view = parentView;
 	}
 	
-	public IGestureCondition fromTouchDown()
+//	public IGestureCondition fromTouchDown()
+//	{
+//		return new CheckWithinMilliSecondsOfTimingIdCondition(view, range, TouchHandler.ActionDownTime);
+//	}
+	
+	public IGestureCondition fromTouchDown(int index)
 	{
-		return new CheckWithinMilliSecondsOfTimingIdCondition(view, range, TouchHandler.ActionDownTime);
+		return new CheckWithinMilliSecondsOfTimingIdCondition(view, range, TouchHandler.getEventId(TouchHandler.ActionDownTime, index));
 	}
 	
 	public IGestureCondition fromMove()
@@ -24,9 +29,9 @@ public class TimeRangeStartSelector {
 		return new CheckWithinMilliSecondsOfTimingIdCondition(view, range, TouchHandler.ActionMoveTime);
 	}
 	
-	public IGestureCondition fromTouchUp()
+	public IGestureCondition fromTouchUp(int index)
 	{
-		return new CheckWithinMilliSecondsOfTimingIdCondition(view, range, TouchHandler.ActionUpTime);
+		return new CheckWithinMilliSecondsOfTimingIdCondition(view, range, TouchHandler.getEventId(TouchHandler.ActionUpTime, index));
 	}
 	
 	private int range;

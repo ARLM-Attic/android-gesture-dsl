@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 
 public class TouchHandler {
 	
-	public static String TouchHandler = "TOUCH_HANDLER";
+	public static String TouchHandlerId = "TOUCH_HANDLER";
 	
 	public static String ActionDownPos = "ACTION_DOWN_POSITION";
 	public static String ActionDownTime = "ACTION_DOWN_TIME";
@@ -29,8 +29,13 @@ public class TouchHandler {
 	
 	public void addGesture(TouchGesture gesture)
 	{
-		gesture.addContext(TouchHandler, this);
+		gesture.addContext(TouchHandlerId, this);
 		gestureList.add(gesture);
+	}
+	
+	public static String getEventId(String dataKey, int index)
+	{
+		return dataKey + "_" + ((Integer)index).toString();
 	}
 	
 	public void invalidateTimer() {
@@ -38,6 +43,28 @@ public class TouchHandler {
 		{
 			handler.removeCallbacks(timerAction);
 			timerAction = null;
+		}
+	}
+	
+	public void tryReset()
+	{
+		boolean canReset = true;
+		for(TouchGesture eventOrder : gestureList)
+		{
+			if(eventOrder.isValid() && !eventOrder.isCompleted())
+				canReset = false;
+		}
+		
+		if(canReset)
+		{
+			for(TouchGesture eventOrder : gestureList)
+			{
+				eventOrder.reset();
+				eventOrder.addContext(TouchHandlerId, this);
+				
+				touchDownCounter = 0;
+				touchUpCounter = 0;
+			}
 		}
 	}
 	
@@ -62,10 +89,11 @@ public class TouchHandler {
 		switch (action) {
     	case MotionEvent.ACTION_DOWN:
     	case MotionEvent.ACTION_POINTER_DOWN:
+			touchDownCounter++;
     		for(TouchGesture eventOrder : gestureList)
     		{
-    			eventOrder.addContext(ActionDownPos, motion.getPosition());
-    			eventOrder.addContext(ActionDownTime, motion.getTime());
+    			eventOrder.addContext(TouchHandler.getEventId(ActionDownPos, touchDownCounter), motion.getPosition());
+    			eventOrder.addContext(TouchHandler.getEventId(ActionDownTime, touchDownCounter), motion.getTime());
 	    		if(eventOrder.isValid() && eventOrder.current().event == TouchEvent.TOUCH_DOWN)
 	    		{
 	    			for(IfThenClause condition: eventOrder.current().conditionList)
@@ -113,15 +141,18 @@ public class TouchHandler {
     		break;
     	case MotionEvent.ACTION_UP:
     	case MotionEvent.ACTION_POINTER_UP:
+			touchUpCounter++;
     		for(TouchGesture eventOrder : gestureList)
     		{
-    			eventOrder.addContext(ActionUpPos, motion.getPosition());
-    			eventOrder.addContext(ActionUpTime, motion.getTime());
-				if(eventOrder.isValid() && (eventOrder.current().event == TouchEvent.TOUCH_MOVE) && !eventOrder.current().isOptional && !eventOrder.isCurrentExecuted())
+    			eventOrder.addContext(TouchHandler.getEventId(ActionUpPos, touchUpCounter), motion.getPosition());
+    			eventOrder.addContext(TouchHandler.getEventId(ActionUpTime, touchUpCounter), motion.getTime());
+				if(eventOrder.isValid() && (eventOrder.current().event == TouchEvent.TOUCH_MOVE) 
+						&& !eventOrder.current().isOptional && !eventOrder.isCurrentExecuted())
 				{
 					eventOrder.invalidate();
 				}
-				if(eventOrder.isValid() && (eventOrder.current().event == TouchEvent.TOUCH_MOVE) && (eventOrder.current().isOptional || eventOrder.isCurrentExecuted()))
+				if(eventOrder.isValid() && (eventOrder.current().event == TouchEvent.TOUCH_MOVE) 
+						&& (eventOrder.current().isOptional || eventOrder.isCurrentExecuted()))
 				{
 					eventOrder.moveNext();
 				}
@@ -146,21 +177,7 @@ public class TouchHandler {
     		break;
     	}
 		
-		boolean canReset = true;
-		for(TouchGesture eventOrder : gestureList)
-		{
-			if(eventOrder.isValid() && !eventOrder.isCompleted())
-				canReset = false;
-		}
-		
-		if(canReset)
-		{
-			for(TouchGesture eventOrder : gestureList)
-			{
-				eventOrder.reset();
-				eventOrder.addContext(TouchHandler, this);
-			}
-		}
+		tryReset();
 
 	}
 	
@@ -170,4 +187,7 @@ public class TouchHandler {
 	private IGestureAction timerGestureAction = null;
 	private IGestureCondition timerGestureCondition = null;
 	private GestureEvent lastMotionEvent;
+	
+	private int touchDownCounter = 0;
+	private int touchUpCounter = 0;
 }

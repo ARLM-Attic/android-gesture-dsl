@@ -1,16 +1,13 @@
 package com.hfk.android.gestures;
 
-public class DoInvalidateRunningTimerAction implements IGestureAction {
-
-	public DoInvalidateRunningTimerAction() {
-	}
-
+public class DoSignalGestureCompleted implements IGestureAction {
 	@Override
 	public void executeAction(GestureEvent motion, TouchGesture gesture) {
+		gesture.setAllEventsProcessed();
 		if(gesture.contextExists(TouchHandler.TouchHandlerId))
 		{
 			TouchHandler handler = (TouchHandler)gesture.getContext(TouchHandler.TouchHandlerId);
-			handler.invalidateTimer();
+			handler.tryReset();
 		}
 	}
 }

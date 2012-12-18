@@ -108,6 +108,11 @@ public class TouchGesture implements IResetable  {
 		return (index >= eventList.size());
 	}
 	
+	public void setAllEventsProcessed()
+	{
+		index = eventList.size();
+	}
+	
 	public boolean contextExists(String key)
 	{
 		return context.containsKey(key);

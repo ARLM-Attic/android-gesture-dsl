@@ -1,7 +1,9 @@
 package com.hfk.android.gestures.dsl;
 
 import com.hfk.android.gestures.CheckNot;
+import com.hfk.android.gestures.DoInvalidateGestureGestureAction;
 import com.hfk.android.gestures.DoInvalidateRunningTimerAction;
+import com.hfk.android.gestures.DoSignalGestureCompleted;
 import com.hfk.android.gestures.IGestureAction;
 import com.hfk.android.gestures.IGestureCondition;
 import com.hfk.android.gestures.TouchGesture;
@@ -43,6 +45,16 @@ public class GestureBuilder<V> {
 	public DoInvalidateRunningTimerAction endCurrentTimer()
 	{
 		return new DoInvalidateRunningTimerAction();
+	}
+	
+	public DoInvalidateGestureGestureAction invalidateGesture()
+	{
+		return new DoInvalidateGestureGestureAction();
+	}
+	
+	public DoSignalGestureCompleted gestureIsCompleted()
+	{
+		return new DoSignalGestureCompleted();
 	}
 	
 	public V getView()

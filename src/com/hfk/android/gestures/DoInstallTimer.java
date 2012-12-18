@@ -9,7 +9,7 @@ public class DoInstallTimer implements IGestureAction {
 
 	@Override
 	public void executeAction(GestureEvent motion, TouchGesture gesture) {
-		TouchHandler handler = (TouchHandler)gesture.getContext(TouchHandler.TouchHandler);
+		TouchHandler handler = (TouchHandler)gesture.getContext(TouchHandler.TouchHandlerId);
 		handler.installTimer(timerAction, timerTimeOut, gesture);
 	}
 

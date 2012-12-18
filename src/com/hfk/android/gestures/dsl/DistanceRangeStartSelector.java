@@ -13,9 +13,9 @@ public class DistanceRangeStartSelector {
 		view = parentView;
 	}
 	
-	public IGestureCondition fromTouchDown()
+	public IGestureCondition fromTouchDown(int index)
 	{
-		return new CheckWithinDistanceOfRegisteredPointCondition(view, range, TouchHandler.ActionDownPos);
+		return new CheckWithinDistanceOfRegisteredPointCondition(view, range, TouchHandler.getEventId(TouchHandler.ActionDownPos, index));
 	}
 	
 	public IGestureCondition fromMove()
@@ -23,9 +23,9 @@ public class DistanceRangeStartSelector {
 		return  new CheckWithinDistanceOfRegisteredPointCondition(view, range, TouchHandler.ActionMovePos);
 	}
 	
-	public IGestureCondition fromTouchUp()
+	public IGestureCondition fromTouchUp(int index)
 	{
-		return  new CheckWithinDistanceOfRegisteredPointCondition(view, range, TouchHandler.ActionUpPos);
+		return  new CheckWithinDistanceOfRegisteredPointCondition(view, range, TouchHandler.getEventId(TouchHandler.ActionUpPos, index));
 	}
 	
 	private int range;

@@ -1,8 +1,8 @@
 package com.hfk.android.gestures;
 
-public class DoInvalidateRunningTimerAction implements IGestureAction {
+public class DoTryResetHandlerAction implements IGestureAction {
 
-	public DoInvalidateRunningTimerAction() {
+	public DoTryResetHandlerAction() {
 	}
 
 	@Override
@@ -10,7 +10,7 @@ public class DoInvalidateRunningTimerAction implements IGestureAction {
 		if(gesture.contextExists(TouchHandler.TouchHandlerId))
 		{
 			TouchHandler handler = (TouchHandler)gesture.getContext(TouchHandler.TouchHandlerId);
-			handler.invalidateTimer();
+			handler.tryReset();
 		}
 	}
 }

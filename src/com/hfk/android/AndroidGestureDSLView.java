@@ -21,14 +21,18 @@ public class AndroidGestureDSLView extends View {
 	    touchHandler = new TouchHandler();
 	    
 	    ClickOnRectangleGesture clickOnRectangleBuilder = new ClickOnRectangleGesture(this);
+	    DoubleClickOnRectangleGesture doubleClickOnRectangleBuilder = new DoubleClickOnRectangleGesture(this);
+	    ClickAndDoubleClickOnRectangleGesture clickAndDoubleClickOnRectangleBuilder = new ClickAndDoubleClickOnRectangleGesture(this);
 	    LongClickOutsideRectangle longClickOutsideRectangleBuilder = new LongClickOutsideRectangle(this);
 	    DragRectangleGesture dragRectangleGestureBuilder = new DragRectangleGesture(this);
 	    DragRectangleOrShowMessageGesture dragRectangleOrShowMessageGestureBuilder = new DragRectangleOrShowMessageGesture(this);
 	    
 	    //touchHandler.addGesture(clickOnRectangleBuilder.create());
+	    //touchHandler.addGesture(doubleClickOnRectangleBuilder.create());
+	    touchHandler.addGesture(clickAndDoubleClickOnRectangleBuilder.create());
 	    //touchHandler.addGesture(longClickOutsideRectangleBuilder.create());
 	    //touchHandler.addGesture(dragRectangleGestureBuilder.create());
-	    touchHandler.addGesture(dragRectangleOrShowMessageGestureBuilder.create());
+	    //touchHandler.addGesture(dragRectangleOrShowMessageGestureBuilder.create());
 	}
     
     public boolean onTouchEvent(MotionEvent motion)   { 
