@@ -21,8 +21,9 @@ public class DragRectangleGesture extends GestureBuilder<AndroidGestureDSLView> 
 	{
 		TouchGesture gesture = new TouchGesture("DragRectangleGesture");
 		
-		this.Create(gesture).TouchDown().If(OnRectangle())
-				.Do2(RegisterRectangleHitPoint())
+		this.Create(gesture).TouchDown()
+				.If(OnRectangle())
+					.Do2(RegisterRectangleHitPoint())
 			.AndNext()
 				.Move()
 				.If(not(within().milliMeters(2).fromTouchDown(1)))

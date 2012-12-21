@@ -29,10 +29,10 @@ public class AndroidGestureDSLView extends View {
 	    
 	    //touchHandler.addGesture(clickOnRectangleBuilder.create());
 	    //touchHandler.addGesture(doubleClickOnRectangleBuilder.create());
-	    touchHandler.addGesture(clickAndDoubleClickOnRectangleBuilder.create());
+	    //touchHandler.addGesture(clickAndDoubleClickOnRectangleBuilder.create());
 	    //touchHandler.addGesture(longClickOutsideRectangleBuilder.create());
 	    //touchHandler.addGesture(dragRectangleGestureBuilder.create());
-	    //touchHandler.addGesture(dragRectangleOrShowMessageGestureBuilder.create());
+	    touchHandler.addGesture(dragRectangleOrShowMessageGestureBuilder.create());
 	}
     
     public boolean onTouchEvent(MotionEvent motion)   { 

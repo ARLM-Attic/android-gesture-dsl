@@ -20,7 +20,7 @@ public class RegisterRectangleHitPointAction extends GestureActionBase<AndroidGe
 	@Override
 	public void executeAction(GestureEvent motion, TouchGesture gesture) {
 		Point rectangleCenter = getTouchedView().getRectangleCenter();
-		ScreenVector touchDownPoint = (ScreenVector)gesture.getContext(TouchHandler.ActionDownPos);
+		ScreenVector touchDownPoint = motion.getPosition();//(ScreenVector)gesture.getContext(TouchHandler.ActionDownPos);
 		
 		Point hitOffset = new Point(rectangleCenter.x - touchDownPoint.x, rectangleCenter.y - touchDownPoint.y);
 		
