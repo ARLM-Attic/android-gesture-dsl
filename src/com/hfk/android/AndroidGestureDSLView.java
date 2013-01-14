@@ -1,6 +1,7 @@
 package com.hfk.android;
 
 import com.hfk.android.gestures.TouchHandler;
+import com.hfk.imageprocessing.AndroidVision;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +17,15 @@ import android.widget.Toast;
 
 public class AndroidGestureDSLView extends View {
 
+	public static final String ENABLED_GESTURES = "EnabledGestures";
+
+	public static final String CLICK_GESTURE = "ClickGesture";
+	public static final String DBLCLICK_GESTURE = "DblClickGesture";
+	public static final String CLICKDBLCLICK_GESTURE = "ClickDblClickGesture";
+	public static final String DRAG_GESTURE = "DragGesture";
+	public static final String LONGTOUCH_GESTURE = "LongTouchGesture";
+	public static final String DRAGLONGTOUCH_GESTURE = "DragLongTouchGesture";
+	
 	public AndroidGestureDSLView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -27,12 +38,12 @@ public class AndroidGestureDSLView extends View {
 	    DragRectangleGesture dragRectangleGestureBuilder = new DragRectangleGesture(this);
 	    DragRectangleOrShowMessageGesture dragRectangleOrShowMessageGestureBuilder = new DragRectangleOrShowMessageGesture(this);
 	    
-	    //touchHandler.addGesture(clickOnRectangleBuilder.create());
+		touchHandler.addGesture(clickOnRectangleBuilder.create());
 	    //touchHandler.addGesture(doubleClickOnRectangleBuilder.create());
-	    //touchHandler.addGesture(clickAndDoubleClickOnRectangleBuilder.create());
-	    //touchHandler.addGesture(longClickOutsideRectangleBuilder.create());
-	    //touchHandler.addGesture(dragRectangleGestureBuilder.create());
-	    touchHandler.addGesture(dragRectangleOrShowMessageGestureBuilder.create());
+		//touchHandler.addGesture(clickAndDoubleClickOnRectangleBuilder.create());
+		//touchHandler.addGesture(longClickOutsideRectangleBuilder.create());
+		//touchHandler.addGesture(dragRectangleGestureBuilder.create());
+		//touchHandler.addGesture(dragRectangleOrShowMessageGestureBuilder.create());
 	}
     
     public boolean onTouchEvent(MotionEvent motion)   { 
